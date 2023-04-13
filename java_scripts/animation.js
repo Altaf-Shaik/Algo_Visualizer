@@ -1,13 +1,13 @@
-let speed = 10;
+let speed = 700;
 speed_val.addEventListener("input",handlespeed);
 function handlespeed() {
     actual_speed = speed_val.value;
     switch(actual_speed) {
         case '1':
-            speed = 1500;
+            speed = 1000;
             break;
         case '2':
-            speed = 1000;
+            speed = 700;
             break;
         case '3':
             speed = 100;
