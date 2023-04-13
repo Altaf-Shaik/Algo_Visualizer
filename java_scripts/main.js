@@ -12,7 +12,7 @@ let actual_speed = speed_val.value;
 
 // value of speed slider
 let value_of_speed_slider = document.querySelector(".time-range-val");
-value_of_speed_slider.innerHTML = "0.1 sec";
+value_of_speed_slider.innerHTML = "0.7 sec";
 
 //generate array
 let generate_array_btn = document.getElementById("array_generate");
@@ -24,7 +24,6 @@ let which_algo = document.querySelectorAll(".all-algorithms button");
 // Bars (Divs)
 let bars_container = document.getElementById("array_container");
 let bar_height = [];  // Actual height of each bar will be stored here
-// let bars = []; // collection of bars will be stored in this array
 
 array_slider_val.addEventListener("input", updateArraySize);
 generate_array_btn.addEventListener("click", generateArray);
@@ -49,7 +48,7 @@ function generateBars(move) {
         }
         if(move && move.indices.includes(i)) {
             bars.style.backgroundColor = 
-                move.type === "swap" ? "red" : "blue";
+                move.type === "swap" ? "red" : move.type === "pivot" ? "green" : "blue";
         }
     }
 }
@@ -79,6 +78,7 @@ for (let i = 0; i < which_algo.length; ++i) {
 function callAlgo() {
     // disableButtons();
     const copy = [...bar_height];
+    let moves = [];
     switch (this.innerHTML) {
         case "Bubble":
             let moves_of_bubble = Bubble(copy);
@@ -91,6 +91,24 @@ function callAlgo() {
         case "Insertion":
             let moves_of_insertion = Insertion(copy);
             animateBars(moves_of_insertion);
+            break;
+        case "Merge":
+            let moves_of_merge = Merge(copy,0,actual_array_size-1,moves);
+            // animateBars(moves_of_merge);
+            for(let i=0; i<actual_array_size; ++i) {
+                console.log(copy[i]);
+                bar_height[i] = copy[i];
+            }
+            generateBars();
+            break;
+        case "Quick":
+            let moves_of_quick = Quick(copy,0,actual_array_size-1,moves);
+            animateBars(moves_of_quick);
+            // for(let i=0; i<actual_array_size; ++i) {
+            //     console.log(copy[i]);
+            //     bar_height[i] = copy[i];
+            // }
+            // generateBars();
             break;
     }
 }
